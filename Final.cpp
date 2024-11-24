@@ -7,6 +7,7 @@ struct teams{
 	int points;
 	int gd;
 };
+void addTeam(int &n, teams t[]);
 void entry(int n,teams t[])
 	{
 	int i;
@@ -77,14 +78,18 @@ void entry(int n,teams t[])
  	switch (menuN){
  		case 1: 
  		cout<<"Currently working on this feature."<<endl<<endl;
+ 		return n;
  		break;
  		
  		case 2:
- 		cout<<"Currently working on this feature."<<endl<<endl;
+ 		 addTeam(n, t);
+ 		 sortTeams(t,n);
+ 		 return(n);
  		break;
  		
  		case 3:
  		output(t,n);
+ 		return n;
  		break;
  		
  		case 4:
@@ -92,24 +97,37 @@ void entry(int n,teams t[])
  		exit(1);
  		break;
 	 }
- 	
-	 }	
+	}
+void addTeam(int &n, teams t[]) {
+    const int maxTeams = 100; 
+    if (n >= maxTeams) {
+        cout << "Cannot add more teams. Maximum limit reached!" << endl;
+        return;
+    }
+
+    cout << "Enter the details of the new team:" << endl;
+    cout << "Name: ";
+    cin >> t[n].name;
+    cout << "Points: ";
+    cin >> t[n].points;
+    cout << "GD: ";
+    cin >> t[n].gd;
+    n++;
+}	
 int main(){
 int number;
 cout<<"How many teams do you want to enter? "<<endl;
 cin>>number;
-teams Teams[number];
+teams Teams[100];
 entry(number,Teams);
 entryPoints(number,Teams);
 output(Teams,number);
 sortTeams(Teams,number);
 cout<<"The updated table is:"<<endl;
 output(Teams,number);
-while(1)
-{
-menu(Teams,number);
-}
+while(1){
+number=menu(Teams,number);}
+
 }
 	
-
 
