@@ -7,7 +7,6 @@ struct teams{
 	int points;
 	int gd;
 };
-void addTeam(int &n, teams t[]);
 void entry(int n,teams t[])
 	{
 	int i;
@@ -70,6 +69,50 @@ void entry(int n,teams t[])
 			}
 		}
 	}
+	void addTeam(int &n, teams t[]) {
+	    const int maxTeams = 100; 
+	    if (n >= maxTeams) {
+	        cout << "Cannot add more teams. Maximum limit reached!" << endl;
+	        return;
+	    }
+	
+	    cout << "Enter the details of the new team:" << endl;
+	    cout << "Name: ";
+	    cin >> t[n].name;
+	    cout << "Points: ";
+	    cin >> t[n].points;
+	    cout << "GD: ";
+	    cin >> t[n].gd;
+	    n++;
+	}
+	void update(teams t[],int n)
+	{
+		int i, scored, concede;
+		for(i=0;i<n;i++)
+		{
+			cout<<"How many goals did "<<t[i].name<<" score? ";
+			cin>>scored;
+			cout<<"How many goals did "<<t[i].name<<" concede? ";
+			cin>>concede;
+			if(scored>concede)
+			{
+				cout<<t[i].name<<" won."<<endl;
+				t[i].points+=3;
+				t[i].gd+=(scored-concede);
+			}
+			else if(scored<concede)
+			{
+				cout<<t[i].name<<" lost"<<endl;
+				t[i].gd-=(scored-concede);
+			}
+			else
+			{
+			cout<<t[i].name<<" drew"<<endl;
+				t[i].points+=1;
+			}
+		}
+	sortTeams(t,n);	
+	}
  int menu(teams t[], int n)
  {
  	int menuN;
@@ -77,7 +120,7 @@ void entry(int n,teams t[])
  	cin>>menuN;
  	switch (menuN){
  		case 1: 
- 		cout<<"Currently working on this feature."<<endl<<endl;
+ 		update(t,n);
  		return n;
  		break;
  		
@@ -97,23 +140,7 @@ void entry(int n,teams t[])
  		exit(1);
  		break;
 	 }
-	}
-void addTeam(int &n, teams t[]) {
-    const int maxTeams = 100; 
-    if (n >= maxTeams) {
-        cout << "Cannot add more teams. Maximum limit reached!" << endl;
-        return;
-    }
-
-    cout << "Enter the details of the new team:" << endl;
-    cout << "Name: ";
-    cin >> t[n].name;
-    cout << "Points: ";
-    cin >> t[n].points;
-    cout << "GD: ";
-    cin >> t[n].gd;
-    n++;
-}	
+	}	
 int main(){
 int number;
 cout<<"How many teams do you want to enter? "<<endl;
